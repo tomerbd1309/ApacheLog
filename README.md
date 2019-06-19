@@ -31,7 +31,7 @@ of the file it is needed to iterate over the file at list twice, which may cost 
 (in case I chose to use cached thread pool) and have the OS operating endless context switch,<br />
 and causing a starvation. I used 4 threads (of course this number is configurative) because my PC has quad-core processor.<br /><br />
 
-_**possible improvement: **_<br />
+_**possible improvement:**_<br />
 * At the moment threads are created according to the number given<br />
 to the Executor, each thread get a line from the log file and process it. the reading <br />
 waits until the threads are finished. To make it more efficient once a single thread has<br />

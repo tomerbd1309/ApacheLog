@@ -1,6 +1,6 @@
 # Apache Log File Process :page_facing_up:
 
-## Purpose :running:
+## Purpose :dart:
 Process an Apache log file and Perform statistical analyzes on the information found in the log file.
 
 ## Open Source Java Libraries :computer:
@@ -16,7 +16,7 @@ from :[MaxMind](https://www.maxmind.com/en/home?gclid=CjwKCAjwuqfoBRAEEiwAZErCsj
 _**Possible:**_
 2.reports output file path. (If not mentioned, the file will be created relatively.
 
-## Pseudo Work Flow
+## Pseudo Work Flow :surfer:
 [Work_Flow](PseudoWorkFlow.pdf)
 
 ## Caught By A Thread

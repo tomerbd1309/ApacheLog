@@ -16,4 +16,4 @@ Log file path
 '''add how to run and compile'''
 
 ## Pseudo Work Flow
-[Work_Flow](workFlow.pdf)
+[Work_Flow](PseudoWorkFlow.pdf)

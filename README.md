@@ -1,16 +1,16 @@
 # Apache Log File Process :page_facing_up:
 
-## Purpose
+## Purpose :running:
 Process an Apache log file and Perform statistical analyzes on the information found in the log file.
 
-## Open Sources Java Libraries
+## Open Source Java Libraries :computer:
 **Reddison** - Redis based In-Memory Data Grid for Java. <br />
 from :[Redis](https://github.com/MicrosoftArchive/redis/releases) version 3.2.100
 
 **GeoTools** - GeoIP2 API and GeoLite2 database from MaxMind. <br />
 from :[MaxMind](https://www.maxmind.com/en/home?gclid=CjwKCAjwuqfoBRAEEiwAZErCsjaLrhOjFW3PlBOJ_QoGmwfnAVpeeaujecSD4q0cy_vTZtlTqHA0uBoCVYoQAvD_BwE&rId=google)
 
-## Compile & Run
+## Compile & Run :running: :walking:
 #### Expected command-line arguments:
 1. Log file path<br /><br />
 _**Possible:**_
@@ -20,7 +20,7 @@ _**Possible:**_
 [Work_Flow](PseudoWorkFlow.pdf)
 
 ## Caught By A Thread
-#### Thoughts a bout concurrency
+#### Thoughts a bout concurrency :thought_balloon:
 
 * while planning how to make my program support multithreading process I had few options.<br />
 I decided to make the parsing and updating of the relevant data structures a parallel process, <br />

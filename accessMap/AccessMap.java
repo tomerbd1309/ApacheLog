@@ -1,8 +1,9 @@
 import org.redisson.api.RMap;
 
 public class AccessMap {
+	private static Object lock = new Object();
 	
-	public static void insertToAccessToServerMap(RMap<String, Integer> accessToServerMap, String LineInfoStr, Object lock){
+	public static void insertToAccessToServerMap(RMap<String, Integer> accessToServerMap, String LineInfoStr){
 		if(LineInfoStr == null){
 			return;
 		}

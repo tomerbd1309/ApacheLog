@@ -20,9 +20,9 @@ public class ApacheLogThread extends Thread{
 	@Override
 	public void run() {
 		this.logParser.parse(logLine, lineInfo);
-		AccessMap.insertToAccessToServerMap(this.gateWay.getBrowserAccessToServerMap(), this.lineInfo.getBrowser(), this.gateWay.lock);
-		AccessMap.insertToAccessToServerMap(this.gateWay.getOperatingSystemAccessToServerMap(), this.lineInfo.getOperatingSystem(), this.gateWay.lock);
-		AccessMap.insertToAccessToServerMap(this.gateWay.getCountryAccessToServerMap(), this.lineInfo.getCountry(), this.gateWay.lock);
+		AccessMap.insertToAccessToServerMap(this.gateWay.getBrowserAccessToServerMap(), this.lineInfo.getBrowser());
+		AccessMap.insertToAccessToServerMap(this.gateWay.getOperatingSystemAccessToServerMap(), this.lineInfo.getOperatingSystem());
+		AccessMap.insertToAccessToServerMap(this.gateWay.getCountryAccessToServerMap(), this.lineInfo.getCountry());
 		this.latch.countDown();
 	}
 

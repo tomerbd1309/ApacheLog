@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream.GetField;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -15,7 +16,6 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 
 public class GateWay {
-	//public static final LogFile logShortF2 = new LogFile("C:\\Users\\tomer_000\\Desktop\\preparation for job interviews\\taboola\\taboolaAllCodesFiles\\shortLog2.log");*****************
 	public final static String DISTRIBUTION = "Distribution";
 	public static final int NUM_OF_THREADS = 4;
 	
@@ -64,43 +64,19 @@ public class GateWay {
 		try{
 			br = new BufferedReader(new FileReader(new File(logFile.getFilePath())));
 			String logLine = "";
-			
-			//each line is read, sent to a thread that parse and insert the parsed information to the suitable map that counts number of accesses to server.
-			while((logLine = br.readLine())!= null){
-
-				//creates and activates threads for the thread fixed pool
-				exec.submit(new ApacheLogThread(logLine, gateWay, new LineInfo(), new ApacheLogParser(), latch));
-				
-				numOfLinesToWait++;
-				if(numOfLinesToWait == NUM_OF_THREADS){
-					numOfLinesToWait = 0;
-					//wait until all threads are available to the next line process. can optimize by sending every available thread to proccess the next line and not wait until all the four are done
-					latch.await();
-					if(latch.getCount() == 0){
-						latch = new CountDownLatch(NUM_OF_THREADS);
-					}
-				}
-			}
+			logFile.readAndProcessLogFile(logLine, numOfLinesToWait, br, gateWay, exec, latch);
 			br.close();
 			
-			browserMapAfterStatistics = statistics.analyzeMap(gateWay.getBrowserAccessToServerMap(), browserMapAfterStatistics, DISTRIBUTION);
-			operatingSystemMapAfterStatistics = statistics.analyzeMap(gateWay.getOperatingSystemAccessToServerMap(), operatingSystemMapAfterStatistics, DISTRIBUTION);
-			countryMapAfterStatistics = statistics.analyzeMap(gateWay.getCountryAccessToServerMap(), countryMapAfterStatistics, DISTRIBUTION);
-		
-			statistics.clearFile("Distribution", "txt", outPutAnalysisFilePath);
+			analyzeAllMaps(gateWay,statistics);
 			
-			statistics.writeToFile("Distribution", "txt", "Browsers Distribution", browserMapAfterStatistics, outPutAnalysisFilePath);
-			statistics.writeToFile("Distribution", "txt", "Operating Systems Distribution", operatingSystemMapAfterStatistics, outPutAnalysisFilePath);
-			statistics.writeToFile("Distribution", "txt", "Country Distribution", countryMapAfterStatistics, outPutAnalysisFilePath);
+			clearAndWriteResultsOfAnalytics(outPutAnalysisFilePath, statistics);
+			
 		
 		} 
 		catch (FileNotFoundException e){
 			e.printStackTrace();
 		} 
 		catch (IOException e){
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			
 			e.printStackTrace();
 		}
 		finally{
@@ -115,6 +91,7 @@ public class GateWay {
 		}
 	}
 
+	
 	//helpers methods:
 	
 	//getters & setters
@@ -137,5 +114,21 @@ public class GateWay {
 		this.countryAccessToServerMap = countryAccessToServerMap;
 	}
 	
+	//other helpers:
+	
+	private static void clearAndWriteResultsOfAnalytics(String outPutAnalysisFilePath, Statistics statistics){
+		statistics.clearFile("Distribution", "txt", outPutAnalysisFilePath);
+		statistics.writeToFile("Distribution", "txt", "Browsers Distribution", browserMapAfterStatistics, outPutAnalysisFilePath);
+		statistics.writeToFile("Distribution", "txt", "Operating Systems Distribution", operatingSystemMapAfterStatistics, outPutAnalysisFilePath);
+		statistics.writeToFile("Distribution", "txt", "Country Distribution", countryMapAfterStatistics, outPutAnalysisFilePath);	
+	}
+
+	private static void analyzeAllMaps(GateWay gateWay, Statistics statistics){
+		browserMapAfterStatistics = statistics.analyzeMap(gateWay.getBrowserAccessToServerMap(), browserMapAfterStatistics, DISTRIBUTION);
+		operatingSystemMapAfterStatistics = statistics.analyzeMap(gateWay.getOperatingSystemAccessToServerMap(), operatingSystemMapAfterStatistics, DISTRIBUTION);
+		countryMapAfterStatistics = statistics.analyzeMap(gateWay.getCountryAccessToServerMap(), countryMapAfterStatistics, DISTRIBUTION);
+		
+	}
+
 	
 }

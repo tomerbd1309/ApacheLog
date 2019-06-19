@@ -3,14 +3,14 @@ import java.util.concurrent.CountDownLatch;
 public class ApacheLogThread extends Thread{
 	private LineInfo lineInfo;
 	private ApacheLogParser logParser;
-	private GateWay gateWay;
+	private Gateway gateway;
 	private String logLine;
 	private CountDownLatch latch;
 
-	public ApacheLogThread(String logLine, GateWay gateWay, LineInfo lineInfo, ApacheLogParser apacheLogParser, CountDownLatch latch) {
+	public ApacheLogThread(String logLine, Gateway gateway, LineInfo lineInfo, ApacheLogParser apacheLogParser, CountDownLatch latch) {
 		this.lineInfo = lineInfo;
 		this.logParser = apacheLogParser;
-		this.gateWay = gateWay;
+		this.gateway = gateway;
 		this.logLine = logLine;
 		this.latch = latch;
 	}
@@ -20,9 +20,9 @@ public class ApacheLogThread extends Thread{
 	@Override
 	public void run() {
 		this.logParser.parse(logLine, lineInfo);
-		AccessMap.insertToAccessToServerMap(this.gateWay.getBrowserAccessToServerMap(), this.lineInfo.getBrowser());
-		AccessMap.insertToAccessToServerMap(this.gateWay.getOperatingSystemAccessToServerMap(), this.lineInfo.getOperatingSystem());
-		AccessMap.insertToAccessToServerMap(this.gateWay.getCountryAccessToServerMap(), this.lineInfo.getCountry());
+		AccessMap.insertToAccessToServerMap(this.gateway.getBrowserAccessToServerMap(), this.lineInfo.getBrowser());
+		AccessMap.insertToAccessToServerMap(this.gateway.getOperatingSystemAccessToServerMap(), this.lineInfo.getOperatingSystem());
+		AccessMap.insertToAccessToServerMap(this.gateway.getCountryAccessToServerMap(), this.lineInfo.getCountry());
 		this.latch.countDown();
 	}
 
@@ -42,12 +42,12 @@ public class ApacheLogThread extends Thread{
 		this.logParser = logParser;
 	}
 	
-	public GateWay getGetWay() {
-		return gateWay;
+	public Gateway getGetWay() {
+		return gateway;
 	}
 
-	public void setGetWay(GateWay getWay) {
-		this.gateWay = getWay;
+	public void setGetWay(Gateway getway) {
+		this.gateway = getway;
 	}
 
 	public String getLogLine() {

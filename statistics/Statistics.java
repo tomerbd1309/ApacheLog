@@ -139,7 +139,7 @@ public class Statistics {
 	private static String concatPatFileName(String path, String fileName, String suf){
 		StringBuffer sb = new StringBuffer();
 		sb.append(path);
-		sb.append("\\");//check if needed"\\\\"
+		sb.append("\\");
 		sb.append(fileName);
 		sb.append(".");
 		sb.append(suf);

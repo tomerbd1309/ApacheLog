@@ -9,21 +9,21 @@ public class LogFile {
 	/*
 	 *Each line is read, sent to a thread that parse and insert the parsed information to the suitable map that counts number of accesses to server.
 	 */
-	public void readAndProcessLogFile(String logLine, int numOfLinesToWait, BufferedReader br, GateWay gateWay, ExecutorService exec, CountDownLatch latch){
+	public void readAndProcessLogFile(String logLine, int numOfLinesToWait, BufferedReader br, Gateway gateway, ExecutorService exec, CountDownLatch latch){
 		
 		try {
 			while((logLine = br.readLine())!= null){
 
 				//creates and activates threads for the thread fixed pool
-				exec.submit(new ApacheLogThread(logLine, gateWay, new LineInfo(), new ApacheLogParser(), latch));
+				exec.submit(new ApacheLogThread(logLine, gateway, new LineInfo(), new ApacheLogParser(), latch));
 				
 				numOfLinesToWait++;
-				if(numOfLinesToWait == GateWay.NUM_OF_THREADS){
+				if(numOfLinesToWait == Gateway.NUM_OF_THREADS){
 					numOfLinesToWait = 0;
 					//wait until all threads are available to the next line process. can optimize by sending every available thread to proccess the next line and not wait until all the four are done
 					latch.await();
 					if(latch.getCount() == 0){
-						latch = new CountDownLatch(GateWay.NUM_OF_THREADS);
+						latch = new CountDownLatch(Gateway.NUM_OF_THREADS);
 					}
 				}
 			}
@@ -35,6 +35,7 @@ public class LogFile {
 			e.printStackTrace();
 		}
 	}
+	
 	public LogFile(String filePath){
 		this.filePath = filePath;
 	}
@@ -42,6 +43,7 @@ public class LogFile {
 	public String getFilePath(){
 		return this.filePath;
 	}
+	
 	public void setFilePath(String filePath){
 		this.filePath = filePath;
 	}

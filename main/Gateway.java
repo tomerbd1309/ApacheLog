@@ -12,11 +12,10 @@ import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 
-public class GateWay {
+public class Gateway {
 	public final static String DISTRIBUTION = "Distribution";
 	public static final int NUM_OF_THREADS = 4;
 	
-
 	//local maps for data after statistics analyzing 
 	public static ConcurrentHashMap<String, Double> browserMapAfterStatistics = new ConcurrentHashMap<>();
 	public static ConcurrentHashMap<String, Double> operatingSystemMapAfterStatistics = new ConcurrentHashMap<>();
@@ -42,14 +41,14 @@ public class GateWay {
 		config.useSingleServer().setAddress("127.0.0.1:6379");
 		RedissonClient client = Redisson.create(config);
 		
-		GateWay gateWay = new GateWay();
+		Gateway gateway = new Gateway();
 		//initializing data base maps
-		gateWay.setBrowserAccessToServerMap(client.getMap("browserAccessToServerMap"));
-		gateWay.getBrowserAccessToServerMap().clear();
-		gateWay.setOperatingSystemAccessToServerMap(client.getMap("operatingSystemAccessToServerMap"));
-		gateWay.getOperatingSystemAccessToServerMap().clear();
-		gateWay.setCountryAccessToServerMap(client.getMap("countrySystemAccessToServerMap"));
-		gateWay.getCountryAccessToServerMap().clear();
+		gateway.setBrowserAccessToServerMap(client.getMap("browserAccessToServerMap"));
+		gateway.getBrowserAccessToServerMap().clear();
+		gateway.setOperatingSystemAccessToServerMap(client.getMap("operatingSystemAccessToServerMap"));
+		gateway.getOperatingSystemAccessToServerMap().clear();
+		gateway.setCountryAccessToServerMap(client.getMap("countrySystemAccessToServerMap"));
+		gateway.getCountryAccessToServerMap().clear();
 		
 		LogFile logFile = new LogFile(logPath);
 		int numOfLinesToWait = 0;
@@ -61,14 +60,12 @@ public class GateWay {
 		try{
 			br = new BufferedReader(new FileReader(new File(logFile.getFilePath())));
 			String logLine = "";
-			logFile.readAndProcessLogFile(logLine, numOfLinesToWait, br, gateWay, exec, latch);
+			logFile.readAndProcessLogFile(logLine, numOfLinesToWait, br, gateway, exec, latch);
 			br.close();
 			
-			analyzeAllMaps(gateWay,statistics);
+			analyzeAllMaps(gateway,statistics);
 			
 			clearAndWriteResultsOfAnalytics(outPutAnalysisFilePath, statistics);
-			
-		
 		} 
 		catch (FileNotFoundException e){
 			e.printStackTrace();
@@ -120,10 +117,10 @@ public class GateWay {
 		statistics.writeToFile("Distribution", "txt", "Country Distribution", countryMapAfterStatistics, outPutAnalysisFilePath);	
 	}
 
-	private static void analyzeAllMaps(GateWay gateWay, Statistics statistics){
-		browserMapAfterStatistics = statistics.analyzeMap(gateWay.getBrowserAccessToServerMap(), browserMapAfterStatistics, DISTRIBUTION);
-		operatingSystemMapAfterStatistics = statistics.analyzeMap(gateWay.getOperatingSystemAccessToServerMap(), operatingSystemMapAfterStatistics, DISTRIBUTION);
-		countryMapAfterStatistics = statistics.analyzeMap(gateWay.getCountryAccessToServerMap(), countryMapAfterStatistics, DISTRIBUTION);
+	private static void analyzeAllMaps(Gateway gateway, Statistics statistics){
+		browserMapAfterStatistics = statistics.analyzeMap(gateway.getBrowserAccessToServerMap(), browserMapAfterStatistics, DISTRIBUTION);
+		operatingSystemMapAfterStatistics = statistics.analyzeMap(gateway.getOperatingSystemAccessToServerMap(), operatingSystemMapAfterStatistics, DISTRIBUTION);
+		countryMapAfterStatistics = statistics.analyzeMap(gateway.getCountryAccessToServerMap(), countryMapAfterStatistics, DISTRIBUTION);
 		
 	}
 

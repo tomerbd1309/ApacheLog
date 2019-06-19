@@ -1,4 +1,4 @@
-# Apache Log File Process
+# Apache Log File Process :page_facing_up:
 
 ## Purpose
 Process an Apache log file and Perform statistical analyzes on the information found in the log file.
@@ -12,12 +12,9 @@ from :[MaxMind](https://www.maxmind.com/en/home?gclid=CjwKCAjwuqfoBRAEEiwAZErCsj
 
 ## Compile & Run
 #### Expected command-line arguments:
-Log file path
-`add how to run and compile`
-<br />
-<br />
-_**Possible second command-line argument**_ : reports output file path. <br />
-if not mentioned, the file will be created relatively.
+1. Log file path<br /><br />
+_**Possible:**_
+2.reports output file path. (If not mentioned, the file will be created relatively.
 
 ## Pseudo Work Flow
 [Work_Flow](PseudoWorkFlow.pdf)

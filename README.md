@@ -1,7 +1,7 @@
 # Apache Log File Process :page_facing_up:
 
 ## Purpose :dart:
-Process an Apache log file and Perform statistical analyzes on the information found in the log file.
+Process an Apache log file and perform statistical analyzes on the information found in the log file.
 
 ## Open Source Java Libraries :computer:
 **Reddison** - Redis based In-Memory Data Grid for Java. <br />

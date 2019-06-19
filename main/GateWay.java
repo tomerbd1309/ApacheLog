@@ -18,7 +18,7 @@ public class GateWay {
 	//public static final LogFile logShortF2 = new LogFile("C:\\Users\\tomer_000\\Desktop\\preparation for job interviews\\taboola\\taboolaAllCodesFiles\\shortLog2.log");*****************
 	public final static String DISTRIBUTION = "Distribution";
 	public static final int NUM_OF_THREADS = 4;
-	public Object lock = new Object();
+	
 
 	//local maps for data after statistics analyzing 
 	public static ConcurrentHashMap<String, Double> browserMapAfterStatistics = new ConcurrentHashMap<>();

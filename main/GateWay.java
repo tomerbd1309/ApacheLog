@@ -42,7 +42,6 @@ public class GateWay {
 		
 		//Creating a Redis client
 		Config config = new Config();
-		//check the meaning of the port number*******************
 		config.useSingleServer().setAddress("127.0.0.1:6379");
 		RedissonClient client = Redisson.create(config);
 		

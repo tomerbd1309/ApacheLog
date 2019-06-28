@@ -22,7 +22,6 @@ public class ApacheLogThread extends Thread{
 		this.logParser.parse(this.logLine, this.lineInfo);
 		this.dbMapsHolder.insertIntoAllAccessToServerMap(this.lineInfo);
 		this.latch.countDown();
-		System.out.println("I am " + this.getId() + " barrier count " + this.latch.getCount());
 	}
 
 //************************************************************************************************

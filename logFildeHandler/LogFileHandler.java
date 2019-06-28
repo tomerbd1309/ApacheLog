@@ -64,7 +64,7 @@ public class LogFileHandler {
 		this.writeToFile("Distribution", "txt", "Browsers Distribution", distributionMapsHolder.getBrowserMapAfterAnalysis(), outPutAnalysisFilePath);
 		this.writeToFile("Distribution", "txt", "Operating Systems Distribution", distributionMapsHolder.getOperatingSystemMapAfterAnalysis(), outPutAnalysisFilePath);
 		this.writeToFile("Distribution", "txt", "Country Distribution", distributionMapsHolder.getCountryMapAfterAnalysis(), outPutAnalysisFilePath);	
-		
+		System.out.println("Done writing the file of the analytics : Distribution");
 	}
 	
 	private static String addSuffix(String fileName, String suf) {
@@ -150,7 +150,6 @@ public class LogFileHandler {
 			MapAfterStatistics.entrySet().stream().sorted((e1,e2) -> e2.getValue().compareTo(e1.getValue())).forEach(entry -> pw.println(entry.getKey() + " : " + String.format("%.2f", entry.getValue()) + "%"));
 			pw.println("_____________________________________________________");
 			pw.close();
-			System.out.println("Done writing the file of the analytics : " + fileName);
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

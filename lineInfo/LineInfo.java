@@ -3,7 +3,9 @@ public class LineInfo {
 	private String country = "";
 	private String browser = "";
 	private String operatingSystem = "";
-	
+
+
+//************************************************************************************************
 	//getters & setters
 	public String getCountry() {
 		return country;

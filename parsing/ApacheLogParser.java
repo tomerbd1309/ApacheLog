@@ -13,7 +13,6 @@ public class ApacheLogParser {
 		else{
 			lineInfo.setBrowser(null);//sets info to null and won't be inserted to map
 		}
-		
 		OperatingSystem operatingSystem = getOperatingSystemFromLogLine(logLine);
 		if(operatingSystem != null){
 			lineInfo.setOperatingSystem(operatingSystem.toString());
@@ -21,7 +20,6 @@ public class ApacheLogParser {
 		else{
 			lineInfo.setOperatingSystem(null);
 		}
-		
 		String countryName;
 		try{
 			GeoLocator geoLocator = new GeoLocator();
@@ -39,16 +37,19 @@ public class ApacheLogParser {
 		}	
 	}
 	
-	//helpers methods:
+	
+	
+//************************************************************************************************
+	//helper methods:
 	
 	/*
 	 * the if statements have a certain flow. 
 	 * e.g Defining that the browser used by the client is Chrome
-	 * to conditions must exist: logLone contains Chrome && logLine doesn't contain Chromium
-	 * 
-	 * in addition, the order of browser check was decided according to "http://gs.statcounter.com/browser-market-share"
+	 * to conditions must exist: logLone contains Chrome && logLine doesn't contain Chromium 
+	 * in addition, the order of browser check was decided according to 
+	 * "http://gs.statcounter.com/browser-market-share"
 	*/
-	public Browser getBrowserFromLogLine(String logLine){
+	private Browser getBrowserFromLogLine(String logLine){
 		if(containsBrowserIdentifier(logLine, "Chromium")){
 			return Browser.CHROMIUM;
 		}
@@ -77,7 +78,8 @@ public class ApacheLogParser {
 	}
 	
 	/*
-	 * The order of browser check was decided according to "http://gs.statcounter.com/os-market-share".
+	 * The order of browser check was decided according to 
+	 * "http://gs.statcounter.com/os-market-share".
 	*/
 	private OperatingSystem getOperatingSystemFromLogLine(String logLine) {
 		if(containsOSIdentifier(logLine, "Windows")){

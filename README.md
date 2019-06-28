@@ -14,28 +14,25 @@ from :[MaxMind](https://www.maxmind.com/en/home?gclid=CjwKCAjwuqfoBRAEEiwAZErCsj
 #### Expected command-line arguments:
 1.	Log file path<br /><br />
 _**Possible:**_<br />
-2.	reports output file path. (If not mentioned, the file will be created relatively.
+2.	Reports output file path. (If not mentioned, the file will be created relatively.
 
 ## Pseudo Work Flow :surfer:
 [Work_Flow](PseudoWorkFlow.pdf)
 
 ## Caught By A Thread :closed_lock_with_key:
-#### Thoughts a bout concurrency :thought_balloon:
+#### Thoughts about concurrency :thought_balloon:
 
-* while planning how to make my program support multithreading process I had few options.<br />
+* While planning how to make my program support multithreading process I had few options.<br />
 I decided to make the parsing and updating of the relevant data structures a parallel process, <br />
 while reading the file will be exacuted by a single thread. In order to support concurrent reading <br />
 of the file it is needed to iterate over the file at list twice, which may cost a lot in case it is a big file.<br /><br />
 
-* Using a fixed size thread pool is protecting the program from creating more and more threads<br />
-(in case I chose to use cached thread pool) and have the OS operating endless context switch,<br />
-and causing a starvation. I used 4 threads (of course this number is configurative) because my PC has quad-core processor.<br /><br />
+* I chose Using a fixed size thread pool. At first I thought using a cached thread pool which means that the OS is<br /> 
+creating new thread for every task required while it can, I assumed this can work well since my ApacheLogThread task is short<br />
+(when the task is heavy creating more and more threads for new tasks that arrive will burden the OS even more).<br />
+but when i tested this approach the result was major slowdown. My assumption is that the OS created large amount of threads <br />
+(for each line read from the log file), and while trying to distribute the CPU fairly among all the threads, each thread got a really <br />
+ small part of the CPU, to small to finish it's task, and the OS was occupied performing context switches.
+Using fixed size thread pool allowed me to have more control on the way the work is distributed and done.
 
-_**possible improvement:**_<br />
-* At the moment threads are created according to the number given<br />
-to the Executor, each thread get a line from the log file and process it. the reading <br />
-waits until the threads are finished. To make it more efficient once a single thread has<br />
-finished his work and available to get a new line the reading continues.<br /><br />
-
-* insertToAccessMap method is synchronized and thread safe, using semaphores can make it even process safe.
 

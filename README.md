@@ -27,13 +27,13 @@ I decided to make the parsing and updating of the relevant data structures a par
 while reading the file will be exacuted by a single thread. In order to support concurrent reading <br />
 of the file it is needed to iterate over the file at list twice, which may cost a lot in case it is a big file.<br /><br />
 
-* I chose Using a fixed size thread pool. At first I thought using a cached thread pool which means that the OS is<br /> 
-creating new thread for every task required while it can, I assumed this can work well since my ApacheLogThread<br />
+* I chose Using a fixed size thread pool. At first I thought using a cached thread pool which means that the OS is
+creating new thread for every task required while it can, I assumed this can work well since my ApacheLogThread
 task is short (when the task is heavy creating more and more threads for new tasks that arrive will burden the OS even more).
-but when i tested this approach the result was major slowdown.My assumption is that the OS created <br /> 
-large amount of threads (for each line read from the log file), and while trying to distribute the <br />
-CPU fairly among all the threads, each thread got a really small part of the CPU, to small to <br /> 
-finish it's task, and the OS was occupied performing context switches. Using fixed size thread pool <br />
+but when i tested this approach the result was major slowdown.My assumption is that the OS created  
+large amount of threads (for each line read from the log file), and while trying to distribute the 
+CPU fairly among all the threads, each thread got a really small part of the CPU, to small to 
+finish it's task, and the OS was occupied performing context switches. Using fixed size thread pool 
 allowed me to have more control on the way the work is distributed and done.<br />
 
 

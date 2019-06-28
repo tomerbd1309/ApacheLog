@@ -24,7 +24,7 @@ _**Possible:**_<br />
 
 * While planning how to make my program support multithreading process I had few options.
 I decided to make the parsing and updating of the relevant data structures a parallel process,
-while reading the file will be exacuted by a single thread. In order to support concurrent reading 
+while reading the file will be executed by a single thread. In order to support concurrent reading 
 of the file it is needed to iterate over the file at list twice, which may cost a lot in case it is a big file.<br /><br />
 
 * I chose Using a fixed size thread pool. At first I thought using a cached thread pool which means that the OS is

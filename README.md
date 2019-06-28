@@ -28,8 +28,8 @@ while reading the file will be exacuted by a single thread. In order to support 
 of the file it is needed to iterate over the file at list twice, which may cost a lot in case it is a big file.<br /><br />
 
 * I chose Using a fixed size thread pool. At first I thought using a cached thread pool which means that the OS is<br /> 
-creating new thread for every task required while it can, I assumed this can work well since my ApacheLogThread task is short<br />
-(when the task is heavy creating more and more threads for new tasks that arrive will burden the OS even more).<br />
+creating new thread for every task required while it can, I assumed this can work well since my ApacheLogThread<br />
+ task is short (when the task is heavy creating more and more threads for new tasks that arrive will burden the OS even more).<br />
 but when i tested this approach the result was major slowdown. My assumption is that the OS created large amount of threads <br />
 (for each line read from the log file), and while trying to distribute the CPU fairly among all the threads, each thread got a really <br />
  small part of the CPU, to small to finish it's task, and the OS was occupied performing context switches.

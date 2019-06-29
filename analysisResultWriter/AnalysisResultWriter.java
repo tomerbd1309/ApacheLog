@@ -110,7 +110,7 @@ public class AnalysisResultWriter {
 			e.printStackTrace();
 		}
 		finally {
-				pw.close();
+			pw.close();
 		}	
 	}
 }

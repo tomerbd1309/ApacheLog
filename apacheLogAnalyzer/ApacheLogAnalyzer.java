@@ -14,10 +14,13 @@ public class ApacheLogAnalyzer {
 			return percentageAccessToServerMap;
 		}
 		
-		public void analyzeAllMaps(DBMapsHolder dbMapsHolder, DistributionMapsHolder distrinutionMapsHolder){
-			distrinutionMapsHolder.setBrowserMapAfterAnalysis(this.getDistribution(dbMapsHolder.getBrowserAccessToServerMap(), distrinutionMapsHolder.getBrowserMapAfterAnalysis()));
-			distrinutionMapsHolder.setOperatingSystemMapAfterAnalysis(this.getDistribution(dbMapsHolder.getOperatingSystemAccessToServerMap(), distrinutionMapsHolder.getOperatingSystemMapAfterAnalysis()));
-			distrinutionMapsHolder.setCountryMapAfterAnalysis(this.getDistribution(dbMapsHolder.getCountryAccessToServerMap(), distrinutionMapsHolder.getCountryMapAfterAnalysis()));	
+		public void analyzeAllMaps(DBMapsHolder dbMapsHolder, DistributionMapsHolder distributionMapsHolder, String outPutAnalysisFilePath){
+			AnalysisResultWriter analysisResultWriter = new AnalysisResultWriter();
+			distributionMapsHolder.setBrowserMapAfterAnalysis(this.getDistribution(dbMapsHolder.getBrowserAccessToServerMap(), distributionMapsHolder.getBrowserMapAfterAnalysis()));
+			distributionMapsHolder.setOperatingSystemMapAfterAnalysis(this.getDistribution(dbMapsHolder.getOperatingSystemAccessToServerMap(), distributionMapsHolder.getOperatingSystemMapAfterAnalysis()));
+			distributionMapsHolder.setCountryMapAfterAnalysis(this.getDistribution(dbMapsHolder.getCountryAccessToServerMap(), distributionMapsHolder.getCountryMapAfterAnalysis()));
+			analysisResultWriter.clearAndWriteResultsOfAnalytics(outPutAnalysisFilePath, distributionMapsHolder);
+			
 		}
 	
 

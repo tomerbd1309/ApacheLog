@@ -16,13 +16,12 @@ public class Runner {
 		}	
 		DBMapsHolder dbMapsHolder = DBMapsHolder.getInstance();
 		DistributionMapsHolder distributionMapsHolder = DistributionMapsHolder.getInstance();
-		ApacheLogAnalyzer apacheLogAnalyzer = new ApacheLogAnalyzer();
 		LogFileHandler logFileHandler = new LogFileHandler(logPath);
+		ApacheLogAnalyzer apacheLogAnalyzer = new ApacheLogAnalyzer();
 		ExecutorService exec = Executors.newFixedThreadPool(NUM_OF_THREADS);
 		try{
 			logFileHandler.readAndProcessLogFile(dbMapsHolder, exec);
-			apacheLogAnalyzer.analyzeAllMaps(dbMapsHolder, distributionMapsHolder);
-			logFileHandler.clearAndWriteResultsOfAnalytics(outPutAnalysisFilePath, distributionMapsHolder);
+			apacheLogAnalyzer.analyzeAllMaps(dbMapsHolder, distributionMapsHolder, outPutAnalysisFilePath);
 		} 
 		catch(Exception e){
 			e.printStackTrace();

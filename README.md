@@ -13,8 +13,8 @@ from :[MaxMind](https://www.maxmind.com/en/home?gclid=CjwKCAjwuqfoBRAEEiwAZErCsj
 ## Compile & Run :running: :walking:
 #### Expected command-line arguments:
 1.	Log file path<br /><br />
-_**Possible:**_<br />
-2.	Reports output file path. (If not mentioned, the file will be created relatively.
+_**Optional:**_<br />
+2.	Reports output file path. (If not mentioned, the file will be created relatively).
 
 ## Pseudo Work Flow :surfer:
 [Work_Flow](PseudoWorkFlow.pdf)

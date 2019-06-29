@@ -11,7 +11,7 @@ public class DistributionMapsHolder {
 		this.initiateDistributionMaps();
 	}
 	
-	public static DistributionMapsHolder getInstance(){
+	public static synchronized DistributionMapsHolder getInstance(){
 		if(distributionMapsHolder == null){
 			distributionMapsHolder = new DistributionMapsHolder();
 		}

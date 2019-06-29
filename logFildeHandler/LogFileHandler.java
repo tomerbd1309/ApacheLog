@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class LogFileHandler {
@@ -21,21 +22,16 @@ public class LogFileHandler {
 	 * parsed information to the suitable map that counts number of 
 	 * accesses to server.
 	 */
-	public void readAndProcessLogFile(int numOfLinesToWait,int numOfThreads, DBMapsHolder dbMapsHolder, ExecutorService exec, CountDownLatch latch){
-		int numsOfThreadExacuted = 0;
+	public void readAndProcessLogFile(DBMapsHolder dbMapsHolder, ExecutorService exec){
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(new File(this.getFilePath())));
 			String logLine = "";
 			while((logLine = br.readLine())!= null){
-				exec.submit(new ApacheLogThread(logLine, dbMapsHolder, new LineInfo(), new ApacheLogParser(), latch));
-				numsOfThreadExacuted++;
-				if(numsOfThreadExacuted == numOfThreads){
-					numsOfThreadExacuted =0;
-					latch.await();
-					latch = new CountDownLatch(numOfThreads);
-				}	
-			}
+				exec.submit(new ApacheLogThread(logLine, dbMapsHolder));
+			}	
+			exec.shutdown();
+			exec.awaitTermination(5, TimeUnit.MINUTES);
 		}
 		catch(Exception e){
 			e.printStackTrace();

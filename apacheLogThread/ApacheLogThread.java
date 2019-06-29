@@ -1,27 +1,21 @@
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
 
 public class ApacheLogThread extends Thread{
 	private LineInfo lineInfo;
 	private ApacheLogParser logParser;
 	private DBMapsHolder dbMapsHolder;
 	private String logLine;
-	private CountDownLatch latch;
 	
-	public ApacheLogThread(String logLine, DBMapsHolder dbMapsHolder, LineInfo lineInfo, ApacheLogParser apacheLogParser, CountDownLatch latch){
-		this.lineInfo = lineInfo;
-		this.logParser = apacheLogParser;
+	public ApacheLogThread(String logLine, DBMapsHolder dbMapsHolder){
+		this.lineInfo =  new LineInfo();
+		this.logParser = new ApacheLogParser();
 		this.dbMapsHolder = dbMapsHolder;
 		this.logLine = logLine;
-		this.latch = latch;
 	}
 	
 	@Override
 	public void run() {
 		this.logParser.parse(this.logLine, this.lineInfo);
 		this.dbMapsHolder.insertIntoAllAccessToServerMap(this.lineInfo);
-		this.latch.countDown();
 	}
 
 //************************************************************************************************

@@ -24,7 +24,7 @@ public class DBMapsHolder {
 		this.client = this.createRedisClient();
 	}
 	
-	public static DBMapsHolder getInstance(){
+	public static synchronized DBMapsHolder getInstance(){
 		if(dbMapsHolder == null){
 			dbMapsHolder = new DBMapsHolder();
 		}

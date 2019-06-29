@@ -1,5 +1,3 @@
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,15 +18,13 @@ public class Runner {
 		DistributionMapsHolder distributionMapsHolder = DistributionMapsHolder.getInstance();
 		ApacheLogAnalyzer apacheLogAnalyzer = new ApacheLogAnalyzer();
 		LogFileHandler logFileHandler = new LogFileHandler(logPath);
-		int numOfLinesToWait = 0;
 		ExecutorService exec = Executors.newFixedThreadPool(NUM_OF_THREADS);
-		CountDownLatch latch = new CountDownLatch(NUM_OF_THREADS);
 		try{
-			logFileHandler.readAndProcessLogFile(numOfLinesToWait, NUM_OF_THREADS, dbMapsHolder, exec, latch);
+			logFileHandler.readAndProcessLogFile(dbMapsHolder, exec);
 			apacheLogAnalyzer.analyzeAllMaps(dbMapsHolder, distributionMapsHolder);
 			logFileHandler.clearAndWriteResultsOfAnalytics(outPutAnalysisFilePath, distributionMapsHolder);
 		} 
-		catch (Exception e){
+		catch(Exception e){
 			e.printStackTrace();
 		}
 		finally{
